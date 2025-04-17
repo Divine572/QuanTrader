@@ -1,7 +1,7 @@
 # QuanTrader
 
 <p align="center">
-  <img src="https://via.placeholder.com/200x200.png?text=QuanTrader" alt="QuanTrader Logo" width="200"/>
+  <img src="/Quantrader.png" alt="QuanTrader Logo" width="200"/>
 </p>
 
 <p align="center">
