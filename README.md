@@ -38,7 +38,7 @@ pip install quantrader
 For the development version, install directly from GitHub:
 
 ```bash
-pip install git+https://github.com/yourusername/quantrader.git
+pip install git+https://github.com/Divine572/quantrader.git
 ```
 
 ## Key Features
