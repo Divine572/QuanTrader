@@ -15,6 +15,7 @@
   <a href="#modules"><strong>Modules</strong></a> ·
   <a href="#examples"><strong>Examples</strong></a> ·
   <a href="#tutorials"><strong>Tutorials</strong></a> ·
+  <a href="#project-structure"><strong>Project Structure</strong></a> ·
   <a href="#contributing"><strong>Contributing</strong></a> ·
   <a href="#license"><strong>License</strong></a>
 </p>
@@ -49,6 +50,7 @@ pip install git+https://github.com/Divine572/quantrader.git
 - **🔍 Research-Focused**: Designed for both rapid prototyping and production-ready strategies
 - **📈 ML Integration**: Seamless workflow with scikit-learn, TensorFlow, and PyTorch
 - **📚 Well-Documented**: Extensive documentation with practical examples and tutorials
+- **💰 Smart Money Concepts**: Identification of key SMC patterns (liquidity, order blocks, FVGs)
 
 ## Getting Started
 
@@ -105,6 +107,7 @@ print(df.tail())
 - **Candle**: Candlestick analysis (direction, filling, amplitude, spread)
 - **Math**: Mathematical transformations (derivatives, log returns, autocorrelation, Hurst exponent)
 - **Market Regime**: Identify market phases (bullish, bearish, ranging)
+- **Smart Money Concepts**: Order blocks, fair value gaps, breaker blocks, liquidity levels, market structure
 
 ### Target Engineering (`quantrader.targets`)
 
@@ -192,6 +195,38 @@ print(df[['close', 'sma_cross', 'future_ret', 'direction', 'quantile_labels']].t
 print(f"Upper quantile threshold: {upper_q}, Lower quantile threshold: {lower_q}")
 ```
 
+### Smart Money Concepts Analysis
+
+```python
+import pandas as pd
+import quantrader.features as qf
+
+# Load data
+df = pd.read_csv('data.csv')
+
+# Identify order blocks
+ob_df = qf.smc.order_blocks(df, window_size=5, threshold_pct=0.5)
+
+# Find fair value gaps
+fvg_df = qf.smc.fair_value_gaps(df, min_gap_pct=0.1)
+
+# Identify liquidity levels
+liq_df = qf.smc.liquidity_levels(df, window_size=10)
+
+# Analyze market structure
+ms_df = qf.smc.market_structure(df, window_size=5)
+
+# Print the results
+print("Order Blocks:")
+print(ob_df[['close', 'bull_ob', 'bear_ob']].tail())
+
+print("\nFair Value Gaps:")
+print(fvg_df[['close', 'bull_fvg', 'bear_fvg']].tail())
+
+print("\nMarket Structure:")
+print(ms_df[['close', 'structure']].tail())
+```
+
 ## Tutorials
 
 We provide Jupyter notebook tutorials covering various aspects of quantitative trading:
@@ -203,6 +238,73 @@ We provide Jupyter notebook tutorials covering various aspects of quantitative t
 5. **[Building Effective Trading Models](tutorials/05_model_building.ipynb)** - Model training and evaluation
 6. **[Backtesting Trading Strategies](tutorials/06_backtesting.ipynb)** - Testing strategy performance
 7. **[Risk Management Principles](tutorials/07_risk_management.ipynb)** - Protecting your trading capital
+8. **[Smart Money Concepts](tutorials/08_smart_money_concepts.ipynb)** - Understanding and implementing SMC trading
+
+## Project Structure
+
+```
+quantrader/
+│
+├── __init__.py                # Package initialization
+├── features/                  # Feature engineering module
+│   ├── __init__.py
+│   ├── trend.py               # Trend indicators (SMA, EMA, KAMA)
+│   ├── volatility.py          # Volatility estimators
+│   ├── candle.py              # Candlestick analysis
+│   ├── math.py                # Mathematical transformations
+│   ├── market_regime.py       # Market phase identification
+│   └── smc.py                 # Smart Money Concepts
+│
+├── targets/                   # Target engineering module
+│   ├── __init__.py
+│   ├── directional.py         # Trend prediction labels
+│   ├── magnitude.py           # Continuous targets
+│   ├── event_based.py         # Turning point detection
+│   └── quantile_based.py      # Multi-class labeling
+│
+├── selection/                 # Feature selection module
+│   ├── __init__.py
+│   ├── correlation.py         # Correlation analysis
+│   ├── information_value.py   # Information value metrics
+│   ├── elimination.py         # Feature elimination
+│   └── importance.py          # Feature importance
+│
+├── models/                    # Model building module
+│   ├── __init__.py
+│   ├── cross_validation.py    # Time-series cross-validation
+│   ├── optimization.py        # Parameter tuning
+│   ├── metrics.py             # Performance metrics
+│   └── persistence.py         # Model saving/loading
+│
+├── backtest/                  # Backtesting module
+│   ├── __init__.py
+│   ├── signals.py             # Signal generation
+│   ├── position_sizing.py     # Position size calculation
+│   ├── execution.py           # Trade simulation
+│   └── reporting.py           # Performance analysis
+│
+├── risk/                      # Risk management module
+│   ├── __init__.py
+│   ├── position.py            # Position sizing strategies
+│   ├── drawdown.py            # Drawdown control
+│   ├── portfolio.py           # Multi-asset optimization
+│   └── value_at_risk.py       # VaR calculations
+│
+├── utils/                     # Utility functions
+│   ├── __init__.py
+│   ├── validation.py          # Input validation
+│   └── performance.py         # Performance optimization
+│
+├── tutorials/                 # Tutorial notebooks
+│   ├── 01_getting_started.ipynb
+│   ├── 02_feature_engineering.ipynb
+│   ├── 03_target_engineering.ipynb
+│   ├── 04_feature_selection.ipynb
+│   ├── 05_model_building.ipynb
+│   ├── 06_backtesting.ipynb
+│   ├── 07_risk_management.ipynb
+│   └── 08_smart_money_concepts.ipynb
+```
 
 ## Contributing
 
